@@ -1,0 +1,9 @@
+spring:
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/labreactive
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+  flyway:
+    url: jdbc:postgresql://localhost:5432/labreactive
+    user: ${DB_USER}
+    password: ${DB_PASSWORD}

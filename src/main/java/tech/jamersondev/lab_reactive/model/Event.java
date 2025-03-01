@@ -12,13 +12,13 @@ public class Event {
     @Id
     private Long id;
     private EventTypeEnum type;
-    private String nome;
+    private String name;
     private Date createdDate;
     private String description;
 
-    public Event(EventTypeEnum type, String nome, Date createdDate, String description) {
+    public Event(EventTypeEnum type, String name, Date createdDate, String description) {
         this.type = type;
-        this.nome = nome;
+        this.name = name;
         this.createdDate = createdDate;
         this.description = description;
     }
@@ -31,12 +31,12 @@ public class Event {
         this.type = type;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setNome(String name) {
+        this.name = name;
     }
 
     public Date getCreatedDate() {

@@ -7,7 +7,10 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import tech.jamersondev.lab_reactive.EventForm;
 import tech.jamersondev.lab_reactive.interfaces.IEvent;
+import tech.jamersondev.lab_reactive.model.Event;
 import tech.jamersondev.lab_reactive.repositorys.EventRepository;
+
+import java.util.Date;
 
 
 @Service
@@ -30,5 +33,11 @@ public class EventService implements IEvent {
                 Mono.error(new ResponseStatusException(
                         HttpStatusCode.valueOf(404))))
                 .map(EventForm::new);
+    }
+
+    @Override
+    public Mono<Event> create(EventForm form) {
+        Event event = new Event(form.type(), form.name(), form.description());
+       return this.eventRepository.save(event);
     }
 }

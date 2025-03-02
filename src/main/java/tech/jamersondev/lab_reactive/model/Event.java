@@ -1,9 +1,13 @@
 package tech.jamersondev.lab_reactive.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 import tech.jamersondev.lab_reactive.enums.EventTypeEnum;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Table(name = "event")
@@ -13,14 +17,19 @@ public class Event {
     private Long id;
     private EventTypeEnum type;
     private String name;
-    private Date createdDate;
+    @Column("createddate") //formatação da coluna, pois na persistência do objeto é adicionado _
+    private LocalDate createdDate;
     private String description;
 
-    public Event(EventTypeEnum type, String name, Date createdDate, String description) {
+    public Event(EventTypeEnum type, String name, String description) {
         this.type = type;
         this.name = name;
-        this.createdDate = createdDate;
+        this.createdDate = LocalDate.now();
         this.description = description;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public EventTypeEnum getType() {
@@ -39,11 +48,11 @@ public class Event {
         this.name = name;
     }
 
-    public Date getCreatedDate() {
+    public LocalDate getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(LocalDate createdDate) {
         this.createdDate = createdDate;
     }
 

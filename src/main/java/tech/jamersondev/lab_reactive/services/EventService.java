@@ -1,7 +1,10 @@
 package tech.jamersondev.lab_reactive.services;
 
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import tech.jamersondev.lab_reactive.EventForm;
 import tech.jamersondev.lab_reactive.interfaces.IEvent;
 import tech.jamersondev.lab_reactive.repositorys.EventRepository;
@@ -19,5 +22,13 @@ public class EventService implements IEvent {
     @Override
     public Flux<EventForm> listAll() {
         return eventRepository.findAll().map(EventForm::new);
+    }
+
+    @Override
+    public Mono<EventForm> findByIdentifier(Long id) {
+        return this.eventRepository.findById(id).switchIfEmpty(
+                Mono.error(new ResponseStatusException(
+                        HttpStatusCode.valueOf(404))))
+                .map(EventForm::new);
     }
 }

@@ -10,7 +10,6 @@ import tech.jamersondev.lab_reactive.interfaces.IEvent;
 import tech.jamersondev.lab_reactive.model.Event;
 import tech.jamersondev.lab_reactive.repositorys.EventRepository;
 
-import java.util.Date;
 
 
 @Service
@@ -37,7 +36,12 @@ public class EventService implements IEvent {
 
     @Override
     public Mono<Event> create(EventForm form) {
-        Event event = new Event(form.type(), form.name(), form.description());
+       Event event = new Event(form.type(), form.name(), form.description());
        return this.eventRepository.save(event);
+    }
+
+    @Override
+    public Mono<Void> deleteEvent(Long id) {
+       return this.eventRepository.findById(id).flatMap(eventRepository::delete);
     }
 }

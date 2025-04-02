@@ -20,12 +20,14 @@ public class Event {
     @Column("createddate") //formatação da coluna, pois na persistência do objeto é adicionado _
     private LocalDate createdDate;
     private String description;
+    private boolean deleted;
 
     public Event(EventTypeEnum type, String name, String description) {
         this.type = type;
         this.name = name;
         this.createdDate = LocalDate.now();
         this.description = description;
+        this.deleted = false;
     }
 
     public Long getId() {
@@ -62,5 +64,17 @@ public class Event {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 }

@@ -12,4 +12,6 @@ public interface IEvent {
     Mono<EventForm> findByIdentifier(Long id);
 
     Mono<Event> create(EventForm form);
+
+    Mono<Void> deleteEvent(Long id);
 }

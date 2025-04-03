@@ -51,6 +51,6 @@ public class EventController {
     @Transactional
     public Mono<ResponseEntity<Void>> deleteEvent(@PathVariable("id") Long id){
         return eventService.deleteEvent(id)
-                .map(delete -> ResponseEntity.noContent().build());
+                .then(Mono.just(ResponseEntity.noContent().build()));
     }
 }

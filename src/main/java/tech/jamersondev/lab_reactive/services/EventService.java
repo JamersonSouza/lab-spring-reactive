@@ -23,12 +23,14 @@ public class EventService implements IEvent {
 
     @Override
     public Flux<EventForm> listAll() {
-        return eventRepository.findAll().map(EventForm::new);
+        return eventRepository.findAll()
+                .filter(event -> !event.isDeleted()).map(EventForm::new);
     }
 
     @Override
     public Mono<EventForm> findByIdentifier(Long id) {
-        return this.eventRepository.findById(id).switchIfEmpty(
+        return this.eventRepository.findById(id).filter(event -> !event.isDeleted())
+                .switchIfEmpty(
                 Mono.error(new ResponseStatusException(
                         HttpStatusCode.valueOf(404))))
                 .map(EventForm::new);
@@ -42,6 +44,14 @@ public class EventService implements IEvent {
 
     @Override
     public Mono<Void> deleteEvent(Long id) {
-       return this.eventRepository.findById(id).flatMap(eventRepository::delete);
+     return this.eventRepository.findById(id).filter(event -> !event.isDeleted())
+             .switchIfEmpty(
+                     Mono.error(new ResponseStatusException(
+                             HttpStatusCode.valueOf(404))))
+              .flatMap(eve -> {
+                  eve.setDeleted(true);
+                  return eventRepository.save(eve);
+              }).then();
+
     }
 }

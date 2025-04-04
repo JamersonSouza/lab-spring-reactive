@@ -6,6 +6,7 @@ import org.springframework.web.server.ResponseStatusException;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import tech.jamersondev.lab_reactive.EventForm;
+import tech.jamersondev.lab_reactive.enums.EventTypeEnum;
 import tech.jamersondev.lab_reactive.interfaces.IEvent;
 import tech.jamersondev.lab_reactive.model.Event;
 import tech.jamersondev.lab_reactive.repositorys.EventRepository;
@@ -53,5 +54,11 @@ public class EventService implements IEvent {
                   return eventRepository.save(eve);
               }).then();
 
+    }
+
+    @Override
+    public Flux<EventForm> findByType(EventTypeEnum type) {
+        return eventRepository.findByType(type).
+                filter(event -> !event.isDeleted()).map(EventForm::new);
     }
 }

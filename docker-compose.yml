@@ -1,0 +1,8 @@
+version: '3.9'
+services:
+    lab-reactive:
+      image: jamersonsouza/lab-reactive
+      container_name: reactive-app
+      env_file: .env
+      ports:
+        - 8081:8080 

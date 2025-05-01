@@ -1,9 +1,12 @@
 spring:
   r2dbc:
-    url: r2dbc:postgresql://localhost:5432/labreactive
+    url: r2dbc:postgresql://${DB_HOST}:5432/${DB_NAME}
     username: ${DB_USER}
     password: ${DB_PASSWORD}
+    pool:
+      initial-size: 5
+      max-size: 10
   flyway:
-    url: jdbc:postgresql://localhost:5432/labreactive
+    url: jdbc:postgresql://${DB_HOST}:5432/${DB_NAME}?sslmode=require
     user: ${DB_USER}
     password: ${DB_PASSWORD}

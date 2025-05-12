@@ -46,4 +46,7 @@ jobs:
       run: docker compose build
 
     - name: Push to Docker Hub Container Registry
-      run: docker tag ${{ secrets.DOCKER_USERNAME }}/lab-reactive:latest ${{ secrets.DOCKER_USERNAME }}/lab-reactive:${{github.run_id}} docker push ${{ secrets.DOCKER_USERNAME }}/lab-reactive:${{github.run_id}} docker push ${{ secrets.DOCKER_USERNAME }}/lab-reactive:latest
+      run: |
+        docker tag ${{ secrets.DOCKER_USERNAME }}/lab-reactive:latest ${{ secrets.DOCKER_USERNAME }}/lab-reactive:${{ github.run_id }}
+        docker push ${{ secrets.DOCKER_USERNAME }}/lab-reactive:${{ github.run_id }}
+        docker push ${{ secrets.DOCKER_USERNAME }}/lab-reactive:latest
